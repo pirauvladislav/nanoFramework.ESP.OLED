@@ -20,10 +20,9 @@ using System.Threading;
 using nanoFramework.Hardware.Esp32;
 
 
-namespace nanoframework.i2c.SS1306
+namespace ESP32.OLED.SS1306
 {
-
-   class OLED
+   public class OledDisplay
     {
 
         private static I2cDevice SS1306;
@@ -78,7 +77,7 @@ namespace nanoframework.i2c.SS1306
 
         // Constructor for i2c bus
         // Example: OLED oled = new OLED(OLED.DeviceConnectionSting.I2C1, 0x3C);
-        public OLED(DeviceConnectionSting i2cBus, byte DeviceAddress, int DataPin = 18, int ClockPin = 19)
+        public OledDisplay(DeviceConnectionSting i2cBus, byte DeviceAddress, int DataPin = 18, int ClockPin = 19)
         {
            
             // Pins can be changed from there defaults

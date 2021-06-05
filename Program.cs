@@ -1,10 +1,4 @@
 ﻿//************
-// EEprom references
-// https://github.com/Dweaver309/nanoframework.EEprom
-// https://www.hackster.io/dweaver309/eeprom-i2c-driver-for-nanoframework-718669
-//************
-
-//************
 // SS1306 Oled display references
 // https://github.com/Dweaver309/nanoframework.SS1306
 // https://www.hackster.io/dweaver309/oled-display-driver-for-nanoframework-8744e7
@@ -15,17 +9,17 @@ using System;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
-using nanoframework.i2c.SS1306;
+using ESP32.OLED.SS1306;
 
-namespace nanoframework.I2C.driver
+namespace ESP32.OLED
 {
     public class Program
     {
-        private static OLED oled;
+        private static OledDisplay display;
         public static void Main()
         {
-            oled = new OLED(OLED.DeviceConnectionSting.I2C1, 0x3C);
-            oled.Initialize();
+            display = new OledDisplay(OledDisplay.DeviceConnectionSting.I2C1, 0x3C);
+            display.Initialize();
 
             DisplayShowStartScreen();
 
@@ -39,7 +33,7 @@ namespace nanoframework.I2C.driver
             noButton.DebounceTimeout = TimeSpan.FromMilliseconds(10);
             noButton.ValueChanged += NoButton_ValueChanged;
 
-            while (true) { Thread.Sleep(3000); };
+            Thread.Sleep(Timeout.Infinite);
         }
 
         private static void NoButton_ValueChanged(object sender, PinValueChangedEventArgs e)
@@ -66,34 +60,34 @@ namespace nanoframework.I2C.driver
 
         private static void DisplayShowStartScreen()
         {
-            oled.ClearScreen();
+            display.ClearScreen();
 
-            oled.Write(0, 1, "Hello Daniel !!!");
+            display.Write(0, 1, "Hello Daniel !!!");
 
-            oled.Write(0, 3, "Do you want to be");
-            oled.Write(0, 5, "a programmer ?");
-            oled.Write(0, 7, "Yes     No");
+            display.Write(0, 3, "Do you want to be");
+            display.Write(0, 5, "a programmer ?");
+            display.Write(0, 7, "Yes     No");
         }
 
         private static void DisplayShowYesAnswer()
         {
-            oled.ClearScreen();
+            display.ClearScreen();
 
-            oled.Write(0, 1, "COOOOOOLLLLLL !!!");
+            display.Write(0, 1, "COOOOOOLLLLLL !!!");
 
-            oled.Write(0, 3, "You will be one ");
-            oled.Write(0, 5, "of the greatest");
-            oled.Write(0, 7, "programmer!");
+            display.Write(0, 3, "You will be one ");
+            display.Write(0, 5, "of the greatest");
+            display.Write(0, 7, "programmer!");
         }
 
         private static void DisplayShowNoAnswer()
         {
-            oled.ClearScreen();
+            display.ClearScreen();
 
-            oled.Write(0, 1, "Gooooooddddd !!!");
-            oled.Write(0, 3, "And which of");
-            oled.Write(0, 5, "great profession");
-            oled.Write(0, 7, "will you choose?");
+            display.Write(0, 1, "Gooooooddddd !!!");
+            display.Write(0, 3, "And which of");
+            display.Write(0, 5, "great profession");
+            display.Write(0, 7, "will you choose?");
         }
     }
 }
